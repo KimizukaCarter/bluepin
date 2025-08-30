@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <title>BluePin – Pinterest-style Gallery</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="topbar__left">
+      <div class="brand">
+        <span class="brand__dot"></span>
+        <span class="brand__name">BluePin</span>
+      </div>
+      <nav class="nav">
+        <a href="#" class="nav__link is-active">Beranda</a>
+        <a href="#" class="nav__link">Eksplor</a>
+        <a href="#" class="nav__link">Koleksi</a>
+      </nav>
+    </div>
+
+    <div class="topbar__center">
+      <div class="search">
+        <input id="searchInput" class="search__input" type="search" placeholder="Cari gambar, tema, atau judul…">
+        <button id="clearSearch" class="search__clear" aria-label="Bersihkan pencarian">×</button>
+      </div>
+    </div>
+
+    <div class="topbar__right">
+      <button id="openUpload" class="btn btn--primary">Upload</button>
+      <button id="refresh" class="btn">Refresh</button>
+    </div>
+  </header>
+
+  <!-- Categories / chips -->
+  <section class="chips">
+    <button class="chip" data-chip>Semua</button>
+    <button class="chip" data-chip>Nature</button>
+    <button class="chip" data-chip>City</button>
+    <button class="chip" data-chip>Food</button>
+    <button class="chip" data-chip>Tech</button>
+    <button class="chip" data-chip>Art</button>
+  </section>
+
+  <!-- Gallery Masonry -->
+  <main class="container">
+    <div id="gallery" class="masonry" aria-live="polite"></div>
+  </main>
+
+  <!-- FAB Upload -->
+  <button id="fabUpload" class="fab" title="Upload gambar">＋</button>
+
+  <!-- Upload Drawer -->
+  <aside id="uploadDrawer" class="drawer">
+    <div class="drawer__panel">
+      <header class="drawer__header">
+        <h2>Upload Gambar</h2>
+        <button id="closeDrawer" class="iconbtn" aria-label="Tutup">×</button>
+      </header>
+      <form id="uploadForm" class="form" enctype="multipart/form-data">
+        <label class="form__row">
+          <span>Judul / caption (opsional)</span>
+          <input type="text" name="title" placeholder="Contoh: Pemandangan Senja">
+        </label>
+        <label class="form__row">
+          <span>Pilih gambar</span>
+          <input type="file" name="file" accept="image/*" required>
+        </label>
+        <button type="submit" class="btn btn--primary btn--full">Unggah</button>
+      </form>
+      <p class="muted">Format umum didukung (JPG/PNG/GIF/WebP). Gambar akan tampil di feed setelah berhasil diunggah.</p>
+    </div>
+  </aside>
+
+  <!-- Modal Viewer -->
+  <div id="viewer" class="viewer hidden" role="dialog" aria-modal="true">
+    <div class="viewer__toolbar">
+      <div class="viewer__group">
+        <button id="prevBtn" class="iconbtn" title="Sebelumnya">‹</button>
+        <button id="nextBtn" class="iconbtn" title="Berikutnya">›</button>
+      </div>
+      <div class="viewer__group">
+        <button id="zoomOut" class="iconbtn" title="Zoom out">−</button>
+        <button id="zoomReset" class="iconbtn" title="Reset">•</button>
+        <button id="zoomIn" class="iconbtn" title="Zoom in">＋</button>
+      </div>
+      <div class="viewer__group">
+        <a id="downloadBtn" class="btn btn--primary" download>Download</a>
+        <button id="closeViewer" class="iconbtn" title="Tutup">×</button>
+      </div>
+    </div>
+
+    <div class="viewer__body">
+      <div class="viewer__imageWrap">
+        <img id="viewerImg" alt="">
+      </div>
+      <aside class="viewer__meta">
+        <h3 id="viewerTitle" class="viewer__title"></h3>
+
+        <section class="comments">
+          <h4>Komentar</h4>
+          <div id="commentsList" class="comments__list"></div>
+
+          <form id="commentForm" class="commentform">
+            <input type="text" name="author" placeholder="Nama (opsional)">
+            <input type="text" name="text" placeholder="Tulis komentar…" required>
+            <button class="btn btn--primary" type="submit">Kirim</button>
+          </form>
+        </section>
+      </aside>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>© 2025 BluePin · Dibuat dengan Flask + Vanilla JS</p>
+  </footer>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
